@@ -1,24 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './css/bootstrap.min.css';
+import './css/tooplate-style.css';
+
+import MessageForm from "./components/MessageForm";
+import AllMessages from "./components/AllMessages";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="tm-container mx-auto">
+          <section className="tm-section tm-section-1">
+              <div className="container">
+                  <div className="row">
+                      <div className="col-sm-12">
+                        <AllMessages/>
+                      </div>
+                  </div>
+              </div>
+          </section>
+          <section className="tm-section pt-2 pb-3">
+              <div className="container">
+                <MessageForm/>
+              </div>
+          </section>
+      </div>
     </div>
   );
 }
