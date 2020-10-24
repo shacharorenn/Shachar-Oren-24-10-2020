@@ -1,24 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, GoneException, NotFoundException } from '@nestjs/common';
 import {MessageClassDto} from '../common/messageClass'
 import { v4 as uuid } from 'uuid';
+import { DbService } from 'src/db-service/db-service.service';
 
 @Injectable()
 export class MessagingService {
-    private messagingMap = [];
+    constructor(private dbService: DbService) {}
 
-    public addMessage(message: MessageClassDto) {
-        if(!this.messagingMap[message.receiver]){
-            this.messagingMap[message.receiver] = [];
+    public addMessage(message: MessageClassDto): string {
+        if(!this.dbService.checkIfUserExists(message.receiver)){
+            this.dbService.createNewUser(message.receiver);
         }
+
         message.id = uuid();
         message.creationDate = new Date();
-        this.messagingMap[message.receiver].push(message);
+        this.dbService.pushMessageToUser(message.receiver, message);
+        return message.id;
     }
-    public getAllMessagesOfUser(user_id: string): MessageClassDto[]{
-        if(!this.messagingMap[user_id]){
+
+    public getAllMessagesOfUser(userId: string): MessageClassDto[]{
+        if(!this.dbService.checkIfUserExists(userId)){
             return null;
         }
         
-        return this.messagingMap[user_id];
+        return this.dbService.getAllMessagesOfUser(userId);
+    }
+
+    public deleteMessageOfUser(userId: string, messageId: string): boolean {
+        return this.dbService.deleteMessageOfUser(userId, messageId);
     }
 }
