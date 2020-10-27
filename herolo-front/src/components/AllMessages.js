@@ -1,36 +1,77 @@
 // for each message create messages
-import React,{useEffect,useState} from 'react';
-import Message from './Message'
+import React,{useState} from 'react';
+import Message from './Message';
+import axios from 'axios';
 
 
 export default function AllMessages(){
     const [messagesState, setMessagesState] = useState([]);
-
-    //when press the button, get all user message 
     
-    const getAllMessages = () =>{
-        let url = "http://localhost:3001/messaging/get-all-messages/"+ document.querySelector("#userInput");
-        fetch('/api/data')
-        .then(response => response.json())
-        .then(result => setMessagesState({ data: result }))
+    const getAllMessages = async () =>{
+        let userId = document.querySelector("#userInput").value;
+        const response = await axios.get("http://localhost:3001/messaging/get-all-messages/" + userId);
+        //if user exist
+        if(response.data){
+            if(response.data.length==0){
+                let notMessageForUser = {
+                    error: "user has no message"
+                }
+                setMessagesState(notMessageForUser);
+            }else{
+                setMessagesState(response.data);
+            }
+            
+        }
+        //user isn't exist
+        else{
+            let userNotFound = {
+                error: "user not found"
+            }
+            setMessagesState(userNotFound);
+        }
+        // try{
+        //     const response = await axios.get("http://localhost:3001/messaging/get-all-messages/" + userId)
+        //     setMessagesState(response.data);
+        // }
+        // catch( e ) {
+        //     let userNotFound = {
+        //         error: "user not found"
+        //     }
+        //     setMessagesState(userNotFound);
+        // }
     }
 
+    const handleDelete = async (id,receiver) => {
+        let obj = {
+            'id': id,
+            'receiver': receiver,
+        };
+        const response = await axios.delete("http://localhost:3001/messaging/delete-message",{ data: obj });
+        getAllMessages();
+        console.log(response);
+    };
+
     return(
-        <div className="tm-bg-circle-white tm-flex-center-v">
-            <header className="text-center">
-                <h1 className="tm-site-title">Insert name</h1>
-                <input id="userInput" type="text"></input>
-                <p className="tm-site-subtitle">Insert the name and get all messages</p>
-            </header>
-            {messagesState.map (message => (
-                <ul class="list-group">
-                    <Message from = {message.from} to = {message.to} content = {message.content} date = {message.date}/>
-                </ul>
-            ))}
-            {/* <p>This HTML page features alternating circular spots in a clean and attractive way. You may use this template for any purpose. Photos are from Unsplash website.</p> */}
-            <p className="text-center mt-4 mb-0">
-                <a data-scroll href="#tm-section-2" className="btn tm-btn-secondary">show messages</a>
-            </p>
+        <div className="message-style">
+            <div className="tm-bg-circle-white tm-flex-center-v">
+                <header className="text-center">
+                    <h1 className="tm-site-title">Insert name</h1>
+                    <input id="userInput" type="text"></input>
+                    <p className="tm-site-subtitle">Insert the name and get all messages</p>
+                </header>
+                <p className="text-center mt-4 mb-0">
+                    <a data-scroll href="#tm-section-2" className="btn tm-btn-secondary" onClick={getAllMessages}>show messages</a>
+                </p>
+            </div>
+            <div className="message-item all-messages">
+            {messagesState.error ? <h1>{messagesState.error} </h1>: 
+                messagesState.map(message => (
+                    <ul class="list-group">
+                        <Message handleDelete={() => handleDelete(message.id,message.receiver)} from = {message.sender} to = {message.receiver} subject = {message.subject} content = {message.message} date = {message.creationDate}/>
+                    </ul>
+                ))
+            }
+            </div>
         </div>
     )
 }

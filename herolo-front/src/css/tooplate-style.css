@@ -46,7 +46,6 @@ body {
   background-size: cover;
   -webkit-clip-path: polygon(0px 0px, 100% 0px, 100% 84%, 0px 100%);
   clip-path: polygon(0px 0px, 100% 0px, 100% 84%, 0px 100%);
-  /* background-position: center -95px; */
   background-repeat: no-repeat;
   padding-top: 75px;
 }
@@ -138,10 +137,12 @@ a.btn:hover {
 
 .tm-circle-img {
   width: 550px;
+  
 }
 
 .tm-circle-img-container {
   text-align: right;
+  
 }
 
 .tm-contact-form {
@@ -175,7 +176,24 @@ a.btn:hover {
   color: #cc0064;
   text-decoration: none;
 }
-
+.message-style{
+  display: flex;
+  justify-content: space-between;
+}
+.message-item{
+  padding:0px;
+  overflow: auto;
+  display: inline-block;
+  word-break: break-word;
+}
+.container-msg{
+  display: flex;
+}
+.all-messages{
+  height:500px;
+  max-height:500px;
+  overflow-y:auto;
+}
 @media (min-width: 576px) {
   .container {
     max-width: none;
