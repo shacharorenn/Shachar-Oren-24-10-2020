@@ -23,6 +23,7 @@ export class DbService {
     }
 
     deleteMessageOfUser(userId: string, messageId: string): boolean {
+        console.log("here");
         let isDeleted: boolean = false;
         try{
         this.messagingMap[userId].forEach(function(item, index, object) {

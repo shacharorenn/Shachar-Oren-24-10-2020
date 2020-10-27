@@ -6,8 +6,8 @@ import {MessagingService} from './messaging.service'
 export class MessagingController {
     constructor(private messagingService: MessagingService) {}
     @Post('write-message')
-    writeMessage(@Body() message: MessageClassDto): string {
-        return this.messagingService.addMessage(message);
+    writeMessage(@Body() body: MessageClassDto): string {
+        return this.messagingService.addMessage(body);
     }
 
     @Get('get-all-messages/:user_id')
@@ -16,7 +16,8 @@ export class MessagingController {
     }
 
     @Delete('delete-message')
-    deletMessage(@Body() body): boolean {
-        return this.messagingService.deleteMessageOfUser(body.userId, body.messageId);
+    deleteMessage(@Body() body): boolean {
+        console.log(body);
+        return this.messagingService.deleteMessageOfUser(body.receiver, body.id);
     }
 }

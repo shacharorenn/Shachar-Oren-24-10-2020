@@ -7,13 +7,6 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    console.log("hjasjjsjs");
-    return this.appService.getHello();
-  }
-
-  @Get('shachar')
-  shachar(): string {
-    console.log("hjasjjsjs");
     return this.appService.getHello();
   }
 }
