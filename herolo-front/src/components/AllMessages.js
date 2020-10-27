@@ -13,6 +13,7 @@ export default function AllMessages(){
         //if user exist
         if(response.data){
             if(response.data.length==0){
+                //user exist but have no messages
                 let notMessageForUser = {
                     error: "user has no message"
                 }
@@ -29,16 +30,6 @@ export default function AllMessages(){
             }
             setMessagesState(userNotFound);
         }
-        // try{
-        //     const response = await axios.get("http://localhost:3001/messaging/get-all-messages/" + userId)
-        //     setMessagesState(response.data);
-        // }
-        // catch( e ) {
-        //     let userNotFound = {
-        //         error: "user not found"
-        //     }
-        //     setMessagesState(userNotFound);
-        // }
     }
 
     const handleDelete = async (id,receiver) => {
@@ -48,7 +39,6 @@ export default function AllMessages(){
         };
         const response = await axios.delete("http://localhost:3001/messaging/delete-message",{ data: obj });
         getAllMessages();
-        console.log(response);
     };
 
     return(

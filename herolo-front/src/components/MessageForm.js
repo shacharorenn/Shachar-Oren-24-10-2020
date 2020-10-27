@@ -1,5 +1,3 @@
-
-// import React,{useEffect,useState} from 'react';
 import React,{useState} from 'react';
 import axios from 'axios';
 
@@ -56,13 +54,3 @@ export default () => {
         
     )
 }
-
-
-
-//     // const [messagesState, setMessagesState] = useState([]);
-//     // useEffect (()=>{
-//     //     fetch("https://nztodo.herokuapp.com/api/task/?format=json")//change so get all messages for specific ID
-//     //     .then(respone => respone.json())
-//     //     .then(messages => setMessagesState(messages))
-//     // },[])
-
