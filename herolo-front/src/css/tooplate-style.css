@@ -144,6 +144,9 @@ a.btn:hover {
   text-align: right;
   
 }
+.list-group-item{
+  width: 300px;
+}
 
 .tm-contact-form {
   max-width: 280px;
