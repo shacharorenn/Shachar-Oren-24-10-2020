@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import {MessageClassDto} from '../common/messageClass'
-import { BreakException } from 'src/common/Break.exception';
+import { BreakException } from '../common/Break.exception';
 
 @Injectable()
 export class DbService {
