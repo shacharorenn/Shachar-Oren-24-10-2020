@@ -1,19 +1,17 @@
 import React,{useState} from 'react';
-import img from '../img/img-01.jpg';
+import img from '../img/send-msg-form-image.jpg';
 import MessageServices from '../services/MessageServices'
 
 export const MessageForm = () => {
     const [isMessageSent, setIsMessageSent] = useState(false);
     const handleFormSubmit = async (event) =>  {
         event.preventDefault();
-
-        const {message} = event.target.elements;
-        
+        const {values} = event.target.elements;
         const msg = {
-            'message': message.value,
-            'sender': event.target.elements.sender.value,
-            'receiver': event.target.elements.receiver.value,
-            'subject': event.target.elements.subject.value
+            'message': values.value,
+            'sender': values.sender.value,
+            'receiver': values.receiver.value,
+            'subject': values.subject.value
         };
         MessageServices.setUserMessage(msg);
         setIsMessageSent(true);

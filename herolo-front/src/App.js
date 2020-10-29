@@ -5,12 +5,9 @@ import './css/tooplate-style.css';
 import {MessageForm} from "./MessageController/MessageForm";
 import {AllMessages} from "./MessageController/AllMessages";
 
-export const baseUrl = "http://localhost:3001/";
-
 function App() {
   return (
-    <div className="App">
-      <div className="tm-container mx-auto">
+    <div className="tm-container mx-auto">
         <section className="tm-section tm-section-1">
           <div className="container">
             <div className="row">
@@ -20,12 +17,9 @@ function App() {
             </div>
           </div>
         </section>
-        <section className="tm-section pt-2 pb-3">
-          <div className="container">
+        <section className="tm-section pt-2 pb-3 container">
             <MessageForm/>
-          </div>
         </section>
-      </div>
     </div>
   );
 }

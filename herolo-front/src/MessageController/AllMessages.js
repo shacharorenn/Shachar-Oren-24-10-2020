@@ -7,9 +7,9 @@ import MessageServices from '../services/MessageServices'
 export const AllMessages = () => { 
     const [messagesState, setMessages] = useState([]);
     
-    const getAllMessages = async () =>{
-        //chage this
-        const userId = document.querySelector("#userInput").value;
+    const getAllMessages = async (event) =>{
+        event.preventDefault();
+        const userId = event.target.elements.userInput.value;
         const userMessages = await MessageServices.getUserMessages(userId);
         if(userMessages.data){
             if(userMessages.data.length===0){
@@ -40,15 +40,16 @@ export const AllMessages = () => {
     };
 
     return(
+        <form onSubmit={getAllMessages}>
         <div className="message-style">
             <div className="tm-bg-circle-white tm-flex-center-v">
                 <header className="text-center">
                     <h1 className="tm-site-title">Insert name</h1>
-                    <input id="userInput" type="text"></input>
+                    <input type="text" id="userInput" name="userInput"/>
                     <p className="tm-site-subtitle">Insert the name and get all messages</p>
                 </header>
                 <p className="text-center mt-4 mb-0">
-                    <a data-scroll href="#tm-section-2" className="btn tm-btn-secondary" onClick={getAllMessages}>show messages</a>
+                    <button type="submit" className="btn tm-btn-secondary">Show Messages</button>
                 </p>
             </div>
             <div className="message-item all-messages">
@@ -61,5 +62,6 @@ export const AllMessages = () => {
             }
             </div>
         </div>
+        </form>
     )
 }
