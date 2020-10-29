@@ -197,7 +197,9 @@ a.btn:hover {
   max-height:500px;
   overflow-y:auto;
 }
-
+.about-style{
+  width: 250px
+}
 @media (min-width: 576px) {
   .container {
     max-width: none;
