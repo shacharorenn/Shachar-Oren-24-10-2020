@@ -3,7 +3,7 @@ import axios from 'axios';
 
 class MessageServices {
     constructor(){
-        this.url = 'https://shachar-herolo-backend.herokuapp.com:3001/messaging/';
+        this.url = 'https://shachar-herolo-backend.herokuapp.com:80/messaging/';
     }
     //get messages from server
     getUserMessages = async (userId) => {
