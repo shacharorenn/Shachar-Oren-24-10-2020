@@ -1,32 +1,32 @@
 import React,{useState} from 'react';
-import axios from 'axios';
+import img from '../img/img-01.jpg';
+import MessageServices from '../services/MessageServices'
 
-export default () => {
+export const MessageForm = () => {
     const [isMessageSent, setIsMessageSent] = useState(false);
     const handleFormSubmit = async (event) =>  {
         event.preventDefault();
-        let obj = {
-            'message': event.target.elements.message.value,
+
+        const {message} = event.target.elements;
+        
+        const msg = {
+            'message': message.value,
             'sender': event.target.elements.sender.value,
             'receiver': event.target.elements.receiver.value,
             'subject': event.target.elements.subject.value
         };
-        const response = await axios.post("http://localhost:3001/messaging/write-message", obj);
+        MessageServices.setUserMessage(msg);
         setIsMessageSent(true);
     }
-    const sendMoreMessage = () =>{
-        debugger
-        // event.preventDefault();
-        setIsMessageSent(false);
-    }
-
+    
     return (
         <div className="row">
             <div className="col-xl-4 col-lg-4 tm-flex-center-v tm-section-left">
                 {isMessageSent ? 
-                    <button type="submit" className="btn tm-btn-primary tm-send-btn" onClick={sendMoreMessage}>send more</button>
+                    <button type="submit" className="btn tm-btn-primary tm-send-btn" onClick={()=>setIsMessageSent(false)}>send more</button>
                 :
                 <form className="tm-contact-form" onSubmit={handleFormSubmit}>
+                    {/* <newComp name {...props} */}
                     <div className="form-group mb-4">
                         <input type="text" id="sender" name="sender" className="form-control" placeholder="From" required/>
                     </div>
@@ -46,8 +46,7 @@ export default () => {
                 }
             </div>
             <div className="col-xl-8 col-lg-8 tm-circle-img-container tm-contact-right">
-            <img src={require('../img/img-01.jpg')} alt="message" className="rounded-circle tm-circle-img"/>
-                
+            <img src={img} alt="message" className="rounded-circle tm-circle-img"/>               
             </div>
             
     </div>

@@ -1,34 +1,32 @@
-// for each message create messages
 import React,{useState} from 'react';
-import Message from './Message';
 import axios from 'axios';
+import {Message} from './Message';
+import MessageServices from '../services/MessageServices'
 
 
-export default function AllMessages(){
-    const [messagesState, setMessagesState] = useState([]);
+export const AllMessages = () => { 
+    const [messagesState, setMessages] = useState([]);
     
     const getAllMessages = async () =>{
-        let userId = document.querySelector("#userInput").value;
-        const response = await axios.get("http://localhost:3001/messaging/get-all-messages/" + userId);
-        //if user exist
-        if(response.data){
-            if(response.data.length==0){
+        //chage this
+        const userId = document.querySelector("#userInput").value;
+        const userMessages = await MessageServices.getUserMessages(userId);
+        if(userMessages.data){
+            if(userMessages.data.length===0){
                 //user exist but have no messages
-                let notMessageForUser = {
+                const notMessageForUser = {
                     error: "user has no message"
                 }
-                setMessagesState(notMessageForUser);
+                setMessages(notMessageForUser);
             }else{
-                setMessagesState(response.data);
+                setMessages(userMessages.data);
             }
             
-        }
-        //user isn't exist
-        else{
-            let userNotFound = {
+        }else{
+            const userNotFound = {
                 error: "user not found"
             }
-            setMessagesState(userNotFound);
+            setMessages(userNotFound);
         }
     }
 
@@ -37,7 +35,7 @@ export default function AllMessages(){
             'id': id,
             'receiver': receiver,
         };
-        const response = await axios.delete("http://localhost:3001/messaging/delete-message",{ data: obj });
+        await axios.delete("http://localhost:3001/messaging/delete-message",{ data: obj });
         getAllMessages();
     };
 
