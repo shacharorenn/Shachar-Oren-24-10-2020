@@ -12,7 +12,12 @@ class MessageServices {
     //add new message to server 
     setUserMessage = async (msg) => {
         await axios.post(`${this.url}write-message`, msg);
+    } 
+    //delete message from server 
+    deleteUserMessage = async (data) => {
+        await axios.delete(`${this.url}delete-message`, data);
     }  
+
 
 }
 //show only instance and not all the class

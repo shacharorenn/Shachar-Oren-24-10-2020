@@ -4,14 +4,15 @@ import MessageServices from '../services/MessageServices'
 
 export const MessageForm = () => {
     const [isMessageSent, setIsMessageSent] = useState(false);
+
     const handleFormSubmit = async (event) =>  {
         event.preventDefault();
-        const {values} = event.target.elements;
+        const {message, sender , receiver , subject} = event.target.elements;
         const msg = {
-            'message': values.value,
-            'sender': values.sender.value,
-            'receiver': values.receiver.value,
-            'subject': values.subject.value
+            'message': message.value,
+            'sender': sender.value,
+            'receiver': receiver.value,
+            'subject': subject.value
         };
         MessageServices.setUserMessage(msg);
         setIsMessageSent(true);

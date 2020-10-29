@@ -1,15 +1,16 @@
-import React,{useState} from 'react';
-import axios from 'axios';
+import React,{useState, useRef} from 'react';
 import {Message} from './Message';
 import MessageServices from '../services/MessageServices'
 
-
 export const AllMessages = () => { 
     const [messagesState, setMessages] = useState([]);
-    
+    const inputRef = useRef();
     const getAllMessages = async (event) =>{
-        event.preventDefault();
-        const userId = event.target.elements.userInput.value;
+        if(event){
+            event.preventDefault();
+        }
+        const userId = inputRef.current.value;
+        debugger;
         const userMessages = await MessageServices.getUserMessages(userId);
         if(userMessages.data){
             if(userMessages.data.length===0){
@@ -31,11 +32,11 @@ export const AllMessages = () => {
     }
 
     const handleDelete = async (id,receiver) => {
-        let obj = {
+        let msg = {
             'id': id,
             'receiver': receiver,
         };
-        await axios.delete("http://localhost:3001/messaging/delete-message",{ data: obj });
+        MessageServices.deleteUserMessage({ data: msg });
         getAllMessages();
     };
 
@@ -45,7 +46,7 @@ export const AllMessages = () => {
             <div className="tm-bg-circle-white tm-flex-center-v">
                 <header className="text-center">
                     <h1 className="tm-site-title">Insert name</h1>
-                    <input type="text" id="userInput" name="userInput"/>
+                    <input ref={inputRef} type="text" id="userInput" name="userInput"/>
                     <p className="tm-site-subtitle">Insert the name and get all messages</p>
                 </header>
                 <p className="text-center mt-4 mb-0">
